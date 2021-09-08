@@ -5,6 +5,7 @@ from numba import cuda
 from numba_timer import cuda_timer
 
 max = 1000000
+split_up = 5
 
 @cuda.jit
 def is_prime(r, d):
@@ -68,7 +69,7 @@ def getPrimeNumbers(depth):
     :return:
     """
     d_r = cuda.to_device(np.zeros(depth))
-    divider = get_blocks(5, depth)
+    divider = get_blocks(split_up, depth)
     blocks = get_blocks(int(depth / 100), depth / divider)
     d_d = cuda.to_device(np.array([divider]))
     is_prime[int(blocks), int((depth / divider) / blocks)](d_r, d_d)
