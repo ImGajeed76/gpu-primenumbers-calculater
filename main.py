@@ -4,6 +4,7 @@ import numpy as np
 from numba import cuda
 from numba_timer import cuda_timer
 
+max = 1000000
 
 @cuda.jit
 def is_prime(r, d):
@@ -81,9 +82,11 @@ def getPrimeNumbers(depth):
 timer = cuda_timer.Timer()
 
 timer.start()
-print(getPrimeNumbers(1000000))
+print(getPrimeNumbers(max))
 timer.stop()
 
+print()
+print("Calculated the prime-numbers from 0 to " + str(max) + " in")
 
 duration = timer.elapsed()
 print(str(duration) + " ms")
