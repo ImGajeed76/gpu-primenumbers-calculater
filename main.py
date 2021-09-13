@@ -1,4 +1,3 @@
-
 import numba
 import numpy as np
 from numba import cuda
@@ -9,6 +8,7 @@ max = 1000000
 
 # How many numbers one thread should check
 split_up = 5
+
 
 @cuda.jit
 def is_prime(r, d):
@@ -83,16 +83,22 @@ def getPrimeNumbers(depth):
     return primeNumbers
 
 
-timer = cuda_timer.Timer()
+if __name__ == '__main__':
+    if cuda.detect():
 
-timer.start()
-print(getPrimeNumbers(max))
-timer.stop()
+        timer = cuda_timer.Timer()
 
-print()
-print("Calculated the prime-numbers from 0 to " + str(max) + " in")
+        timer.start()
+        print(getPrimeNumbers(max))
+        timer.stop()
 
-duration = timer.elapsed()
-print(str(duration) + " ms")
-duration_s = timer.elapsed_seconds()
-print(str(duration_s) + " s")
+        print()
+        print("Calculated the prime-numbers from 0 to " + str(max) + " in")
+
+        duration = timer.elapsed()
+        print(str(duration) + " ms")
+        duration_s = timer.elapsed_seconds()
+        print(str(duration_s) + " s")
+
+    else:
+        print("Warning: Cuda is not installed. Please install Cuda and run again.")
