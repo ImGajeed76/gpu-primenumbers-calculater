@@ -4,7 +4,7 @@ from numba import cuda
 from numba_timer import cuda_timer
 
 # How many numbers should be checked
-max = 1000000
+max = 100
 
 # How many numbers one thread should check
 split_up = 5
